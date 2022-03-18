@@ -19,27 +19,6 @@ namespace CustomCalendarWeekNo
             return _culture.Calendar.GetWeekOfYear(dateTime, _calendarWeekRule, _firstDayOfWeek);
         }
 
-        private static int GetWeekOfYear(DateTime date)
-        {
-            int week = GetWeekNumber(date);
-
-            if (week < MinWeek)
-            {
-                // If the week number obtained equals 0, it means that the
-                // given date belongs to the preceding (week-based) year.
-                return GetWeeksInYear(date.Year - 1);
-            }
-
-            if (week > GetWeeksInYear(date.Year))
-            {
-                // If a week number of 53 is obtained, one must check that
-                // the date is not actually in week 1 of the following year.
-                return MinWeek;
-            }
-
-            return week;
-        }
-
         private static int GetWeeksInYear(int year)
         {
             static int P(int y) => (y + (y / 4) - (y / 100) + (y / 400)) % (int)_firstDayOfWeek;
