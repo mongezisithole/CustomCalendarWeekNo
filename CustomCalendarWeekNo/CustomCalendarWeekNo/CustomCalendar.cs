@@ -59,7 +59,7 @@ namespace CustomCalendarWeekNo
         
         private static string WeekNumberAsString(DateTime dateTime)
         {
-            return $"{GetWeekNumber(dateTime)}{GetYear(dateTime)}";
+            return $"{GetYear(dateTime)}{GetWeekNumber(dateTime):00}";
         }
         public static string GetCurrentWeek()
         {
@@ -68,8 +68,6 @@ namespace CustomCalendarWeekNo
             return GetWeekNumberAsString(date);
         }
 
-        public static string GetWeekNumberAsString(DateTime dateTime) => $"{GetWeekNumber(dateTime):00}{GetYear(dateTime)}";
-        
         public static string GetWeekNumberAsString(DateTime dateTime)
         {
             return WeekNumberAsString(dateTime);
