@@ -52,6 +52,24 @@ namespace CustomCalendarWeekNo
             return date.Year;
         }
 
+        private static int GetWeekNumber(DateTime date)
+        {
+            return _culture.Calendar.GetWeekOfYear(date, _calendarWeekRule, _firstDayOfWeek);
+        }
+        
+        private static string WeekNumberAsString(DateTime dateTime)
+        {
+            return $"{GetWeekNumber(dateTime)}{GetYear(dateTime)}";
+        }
+        public static string GetCurrentWeek()
+        {
+            var date = DateTime.Now;
+
+            return GetWeekNumberAsString(date);
+        }
+
+        public static string GetWeekNumberAsString(DateTime dateTime) => $"{GetWeekNumber(dateTime):00}{GetYear(dateTime)}";
+        
         public static string GetWeekNumberAsString(DateTime dateTime)
         {
             return WeekNumberAsString(dateTime);
@@ -73,9 +91,19 @@ namespace CustomCalendarWeekNo
             return WeekNumberAsString(dateTime);
         }
 
-        private static string WeekNumberAsString(DateTime dateTime)
+        public static int GetRemainingDaysInWeek(DateTime date)
         {
-            return $"{GetWeekNumber(dateTime)}{GetYear(dateTime)}";
+            var currentDay = (int)date.DayOfWeek;
+            var startDay = (int)_firstDayOfWeek;
+
+            //Add - 1 to exclude the current day
+            return 7 - (currentDay % startDay) - (currentDay < startDay ? 1 : 0) - 1;
+        }
+
+        public static DateTime GetDateWeekFirstDate(DateTime date)
+        {
+            //Add 7 - 1 to exclude the current day 
+            return date.AddDays(GetRemainingDaysInWeek(date) - (7 - 1));
         }
     }
 }
